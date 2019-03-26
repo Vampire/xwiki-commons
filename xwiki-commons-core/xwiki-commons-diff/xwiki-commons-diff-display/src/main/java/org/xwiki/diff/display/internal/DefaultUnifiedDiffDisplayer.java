@@ -20,8 +20,10 @@
 package org.xwiki.diff.display.internal;
 
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
+import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.stream.StreamSupport;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -39,6 +41,8 @@ import org.xwiki.diff.display.UnifiedDiffConfiguration;
 import org.xwiki.diff.display.UnifiedDiffDisplayer;
 import org.xwiki.diff.display.UnifiedDiffElement;
 import org.xwiki.diff.display.UnifiedDiffElement.Type;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * Displays a {@link DiffResult} as a <a href="http://en.wikipedia.org/wiki/Diff#Unified_format">unified diff</a>. The
@@ -67,7 +71,7 @@ public class DefaultUnifiedDiffDisplayer implements UnifiedDiffDisplayer
         /**
          * The collection of unified diff blocks build so far.
          */
-        private final Stack<UnifiedDiffBlock<E, F>> blocks = new Stack<UnifiedDiffBlock<E, F>>();
+        private final Deque<UnifiedDiffBlock<E, F>> blocks = new ConcurrentLinkedDeque<>();
 
         /**
          * The previous version, used to take the unmodified elements from.
@@ -110,7 +114,7 @@ public class DefaultUnifiedDiffDisplayer implements UnifiedDiffDisplayer
         /**
          * @return the collection of unified diff blocks build so far
          */
-        public Stack<UnifiedDiffBlock<E, F>> getBlocks()
+        public Deque<UnifiedDiffBlock<E, F>> getBlocks()
         {
             return this.blocks;
         }
@@ -179,7 +183,8 @@ public class DefaultUnifiedDiffDisplayer implements UnifiedDiffDisplayer
         // Add unmodified elements after the last delta.
         maybeEndBlock(state, config.getContextSize());
 
-        return state.getBlocks();
+        Iterable<UnifiedDiffBlock<E, F>> iterable = () -> state.getBlocks().descendingIterator();
+        return StreamSupport.stream(iterable.spliterator(), false).collect(toList());
     }
 
     /**

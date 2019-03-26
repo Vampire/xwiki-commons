@@ -20,8 +20,8 @@
 package org.xwiki.properties.internal.converter;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -57,7 +57,7 @@ public class LinkedHashSetConverterTest extends AbstractComponentTestCase
     @Test
     public void testConvertFromLinkedHashSet()
     {
-        HashSet<String> expect = new LinkedHashSet<String>(Arrays.asList("1", "2", "3"));
+        Set<String> expect = new LinkedHashSet<String>(Arrays.asList("1", "2", "3"));
 
         Assert.assertSame(expect, this.converterManager.convert(LinkedHashSet.class, expect));
     }

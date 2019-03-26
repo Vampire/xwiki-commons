@@ -23,7 +23,7 @@ import java.text.MessageFormat;
 
 /**
  * Helper methods to help in implementation of Loggers.
- * 
+ *
  * @version $Id$
  * @since 2.0M1
  * @deprecated starting with 3.1M2 use SLF4J instead
@@ -50,7 +50,7 @@ public abstract class AbstractLogger implements Logger
 
             // Try to save the message for logging output and just append the passed objects instead
             if (objects != null) {
-                StringBuffer sb = new StringBuffer(message);
+                StringBuilder sb = new StringBuilder(message);
                 for (Object object : objects) {
                     if (object != null) {
                         sb.append(object);

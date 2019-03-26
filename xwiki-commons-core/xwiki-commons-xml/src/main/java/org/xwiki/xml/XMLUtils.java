@@ -166,7 +166,7 @@ public final class XMLUtils
      */
     public static String escapeXMLComment(String content)
     {
-        StringBuffer str = new StringBuffer(content.length());
+        StringBuilder str = new StringBuilder(content.length());
 
         char[] buff = content.toCharArray();
         char lastChar = 0;
@@ -199,7 +199,7 @@ public final class XMLUtils
      */
     public static String unescapeXMLComment(String content)
     {
-        StringBuffer str = new StringBuffer(content.length());
+        StringBuilder str = new StringBuilder(content.length());
 
         char[] buff = content.toCharArray();
         boolean escaped = false;

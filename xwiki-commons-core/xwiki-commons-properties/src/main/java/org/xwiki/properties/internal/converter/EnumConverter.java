@@ -66,11 +66,11 @@ public class EnumConverter extends AbstractConverter<Enum>
      */
     private String generateInvalidErrorMessage(Object[] enumValues, String testValue)
     {
-        StringBuffer errorMessage = new StringBuffer("Unable to convert value [" + testValue + "].");
+        StringBuilder errorMessage = new StringBuilder("Unable to convert value [" + testValue + "].");
 
         errorMessage.append(" Allowed values are (case insensitive) ");
 
-        StringBuffer valueList = new StringBuffer();
+        StringBuilder valueList = new StringBuilder();
 
         int index = 1;
         for (Object enumValue : enumValues) {

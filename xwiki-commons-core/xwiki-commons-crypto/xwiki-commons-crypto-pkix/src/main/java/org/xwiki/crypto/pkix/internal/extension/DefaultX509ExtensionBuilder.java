@@ -19,7 +19,7 @@
  */
 package org.xwiki.crypto.pkix.internal.extension;
 
-import java.util.EnumSet;
+import java.util.Set;
 
 import org.bouncycastle.asn1.x509.BasicConstraints;
 import org.bouncycastle.asn1.x509.Extension;
@@ -58,13 +58,13 @@ public class DefaultX509ExtensionBuilder extends AbstractBcX509ExtensionBuilder
     }
 
     @Override
-    public X509ExtensionBuilder addKeyUsage(EnumSet<KeyUsage> usages)
+    public X509ExtensionBuilder addKeyUsage(Set<KeyUsage> usages)
     {
         return addKeyUsage(true, usages);
     }
 
     @Override
-    public X509ExtensionBuilder addKeyUsage(boolean critical, EnumSet<KeyUsage> usages)
+    public X509ExtensionBuilder addKeyUsage(boolean critical, Set<KeyUsage> usages)
     {
         if (usages == null || usages.isEmpty()) {
             return this;

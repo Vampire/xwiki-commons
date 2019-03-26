@@ -203,7 +203,7 @@ public class FilterTestSuite extends Suite
         }
     }
 
-    private final ArrayList<Runner> runners = new ArrayList<Runner>();
+    private final List<Runner> runners = new ArrayList<Runner>();
 
     /**
      * Only called reflectively. Do not use programmatically.

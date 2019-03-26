@@ -19,7 +19,8 @@
  */
 package org.xwiki.observation.internal;
 
-import java.util.Stack;
+import java.util.Deque;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -69,13 +70,13 @@ public class ObservationContextListener extends AbstractEventListener
     /**
      * @return the events stacked in the execution context
      */
-    private Stack<BeginEvent> getCurrentEvents()
+    private Deque<BeginEvent> getCurrentEvents()
     {
-        Stack<BeginEvent> events = null;
+        Deque<BeginEvent> events = null;
 
         ExecutionContext context = this.execution.getContext();
         if (context != null) {
-            events = (Stack<BeginEvent>) context.getProperty(DefaultObservationContext.KEY_EVENTS);
+            events = (Deque<BeginEvent>) context.getProperty(DefaultObservationContext.KEY_EVENTS);
         }
 
         return events;
@@ -88,10 +89,10 @@ public class ObservationContextListener extends AbstractEventListener
     {
         ExecutionContext context = this.execution.getContext();
         if (context != null) {
-            Stack<BeginEvent> events = (Stack<BeginEvent>) context.getProperty(DefaultObservationContext.KEY_EVENTS);
+            Deque<BeginEvent> events = (Deque<BeginEvent>) context.getProperty(DefaultObservationContext.KEY_EVENTS);
 
             if (events == null) {
-                events = new Stack<BeginEvent>();
+                events = new ConcurrentLinkedDeque<>();
                 context.setProperty(DefaultObservationContext.KEY_EVENTS, events);
             }
 
@@ -107,7 +108,7 @@ public class ObservationContextListener extends AbstractEventListener
         if (event instanceof BeginEvent) {
             pushCurrentEvent((BeginEvent) event);
         } else if (event instanceof EndEvent) {
-            Stack<BeginEvent> events = getCurrentEvents();
+            Deque<BeginEvent> events = getCurrentEvents();
 
             if (events != null && !events.isEmpty()) {
                 events.pop();

@@ -172,7 +172,7 @@ public class ExtensionPackager
 
             try {
                 // Order files
-                TreeMap<String, Vfs.File> files = new TreeMap<>();
+                Map<String, Vfs.File> files = new TreeMap<>();
                 for (Vfs.File resourceFile : Vfs.fromURL(new URL(descriptorFolderURL)).getFiles()) {
                     files.put(resourceFile.getRelativePath(), resourceFile);
                 }

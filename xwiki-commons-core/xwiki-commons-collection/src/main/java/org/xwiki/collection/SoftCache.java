@@ -20,6 +20,7 @@
 package org.xwiki.collection;
 
 import java.lang.ref.SoftReference;
+import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -27,7 +28,7 @@ import org.xwiki.stability.Unstable;
 
 /**
  * A concurrent version of {@link WeakHashMap} in which the values are soft references.
- * 
+ *
  * @param <K> the type of keys maintained by this map
  * @param <V> the type of mapped values
  * @version $Id$
@@ -37,7 +38,7 @@ import org.xwiki.stability.Unstable;
 @Unstable
 public class SoftCache<K, V>
 {
-    private WeakHashMap<K, SoftReference<V>> map = new WeakHashMap<>();
+    private Map<K, SoftReference<V>> map = new WeakHashMap<>();
 
     private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
@@ -60,7 +61,7 @@ public class SoftCache<K, V>
 
     /**
      * Get the value associated to the passed key. If no value can be found stored and return the passed default value.
-     * 
+     *
      * @param key the entry key
      * @param defaultValue the default value
      * @return the value associated to the passed key
@@ -84,7 +85,7 @@ public class SoftCache<K, V>
 
     /**
      * Associate passed key to passed value.
-     * 
+     *
      * @param key the entry key
      * @param value the entry value
      */

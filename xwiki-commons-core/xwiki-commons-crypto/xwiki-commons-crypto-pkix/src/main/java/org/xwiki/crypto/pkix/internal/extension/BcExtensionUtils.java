@@ -101,7 +101,7 @@ public final class BcExtensionUtils
      * @param keyUsage the bouncy castle key usage to convert.
      * @return the set of authorized usages.
      */
-    public static EnumSet<KeyUsage> getSetOfKeyUsage(org.bouncycastle.asn1.x509.KeyUsage keyUsage)
+    public static Set<KeyUsage> getSetOfKeyUsage(org.bouncycastle.asn1.x509.KeyUsage keyUsage)
     {
         if (keyUsage == null) {
             return null;
@@ -166,7 +166,7 @@ public final class BcExtensionUtils
      * @param usages the set of authorized usages.
      * @return a bit mask
      */
-    public static org.bouncycastle.asn1.x509.KeyUsage getKeyUsage(EnumSet<KeyUsage> usages)
+    public static org.bouncycastle.asn1.x509.KeyUsage getKeyUsage(Set<KeyUsage> usages)
     {
         int bitmask = 0;
         for (KeyUsage usage : usages) {

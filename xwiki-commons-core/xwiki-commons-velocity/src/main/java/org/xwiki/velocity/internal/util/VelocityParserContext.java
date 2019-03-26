@@ -19,7 +19,8 @@
  */
 package org.xwiki.velocity.internal.util;
 
-import java.util.Stack;
+import java.util.Deque;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 import org.xwiki.velocity.internal.util.VelocityBlock.VelocityType;
 
@@ -38,7 +39,7 @@ public class VelocityParserContext
     /**
      * The current blocks.
      */
-    private Stack<VelocityBlock> blocks = new Stack<VelocityBlock>();
+    private Deque<VelocityBlock> blocks = new ConcurrentLinkedDeque<>();
 
     /**
      * @param type the type of found velocity block.
@@ -72,7 +73,8 @@ public class VelocityParserContext
      */
     public VelocityBlock pushVelocityElement(VelocityBlock block)
     {
-        return this.blocks.push(block);
+        this.blocks.push(block);
+        return block;
     }
 
     /**

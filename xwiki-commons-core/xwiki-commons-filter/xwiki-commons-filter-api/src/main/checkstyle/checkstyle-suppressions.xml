@@ -25,6 +25,5 @@
      "http://www.puppycrawl.com/dtds/suppressions_1_0.dtd">
 
 <suppressions>
-  <!-- This method is supposed to return HashSet, that the type it's handling... -->
-  <suppress checks="IllegalType" files="HashSetConverter.java" />
+  <suppress checks="IllegalType" files="StringWriterOutputTarget.java" />
 </suppressions>

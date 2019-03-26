@@ -21,9 +21,9 @@ package org.xwiki.crypto.pkix.internal.extension;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Set;
 
 import org.bouncycastle.asn1.ASN1ObjectIdentifier;
 import org.bouncycastle.asn1.x509.AuthorityKeyIdentifier;
@@ -149,7 +149,7 @@ public class BcX509Extensions implements X509Extensions
     }
 
     @Override
-    public EnumSet<KeyUsage> getKeyUsage()
+    public Set<KeyUsage> getKeyUsage()
     {
         return BcExtensionUtils.getSetOfKeyUsage(org.bouncycastle.asn1.x509.KeyUsage.fromExtensions(this.extensions));
     }

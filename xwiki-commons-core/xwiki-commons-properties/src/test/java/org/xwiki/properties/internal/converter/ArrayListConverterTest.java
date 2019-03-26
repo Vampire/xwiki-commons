@@ -22,6 +22,7 @@ package org.xwiki.properties.internal.converter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.xwiki.properties.internal.DefaultConverterManager;
@@ -54,7 +55,7 @@ public class ArrayListConverterTest
     @Test
     public void testConvertFromArrayList()
     {
-        ArrayList<String> expect = new ArrayList<String>(Arrays.asList("1", "2", "3"));
+        List<String> expect = new ArrayList<String>(Arrays.asList("1", "2", "3"));
 
         assertSame(expect, this.converterManager.convert(ArrayList.class, expect));
     }

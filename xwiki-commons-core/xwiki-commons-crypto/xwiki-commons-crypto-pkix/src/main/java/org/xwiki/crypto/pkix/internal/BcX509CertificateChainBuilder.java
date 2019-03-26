@@ -25,7 +25,7 @@ import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Deque;
-import java.util.EnumSet;
+import java.util.Set;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -124,7 +124,7 @@ public class BcX509CertificateChainBuilder implements CertificateChainBuilder
                 return null;
             }
 
-            EnumSet<KeyUsage> usage = extensions.getKeyUsage();
+            Set<KeyUsage> usage = extensions.getKeyUsage();
             if (!usage.contains(KeyUsage.keyCertSign)) {
                 return null;
             }

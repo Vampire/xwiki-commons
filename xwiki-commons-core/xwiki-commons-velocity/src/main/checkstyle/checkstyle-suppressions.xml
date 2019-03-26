@@ -25,10 +25,5 @@
      "http://www.puppycrawl.com/dtds/suppressions_1_0.dtd">
 
 <suppressions>
-  <!-- This method is supposed to return HashSet, that the type it's handling... -->
-  <suppress checks="IllegalType" files="HashSetConverter.java" />
-  <!-- This method is supposed to return ArrayList, that the type it's handling... -->
-  <suppress checks="IllegalType" files="ArrayListConverter.java" />
-  <!-- This method is supposed to return LinkedHashSet, that the type it's handling... -->
-  <suppress checks="IllegalType" files="LinkedHashSetConverter.java" />
+  <suppress checks="IllegalType" files="VelocityParser.java" />
 </suppressions>

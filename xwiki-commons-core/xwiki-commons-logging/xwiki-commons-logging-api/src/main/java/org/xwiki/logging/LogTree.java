@@ -20,7 +20,8 @@
 package org.xwiki.logging;
 
 import java.util.Arrays;
-import java.util.Stack;
+import java.util.Deque;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Marker;
@@ -41,7 +42,7 @@ public class LogTree extends LogTreeNode implements Logger
      */
     private static final long serialVersionUID = 1L;
 
-    private Stack<LogTreeNode> currentNode = new Stack<LogTreeNode>();
+    private Deque<LogTreeNode> currentNode = new ConcurrentLinkedDeque<>();
 
     /**
      * Default constructor.

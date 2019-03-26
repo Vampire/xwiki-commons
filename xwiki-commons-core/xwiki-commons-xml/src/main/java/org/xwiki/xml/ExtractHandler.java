@@ -19,7 +19,8 @@
  */
 package org.xwiki.xml;
 
-import java.util.Stack;
+import java.util.Deque;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -111,7 +112,7 @@ public class ExtractHandler extends DefaultHandler
      * The stack of open tags; when the lower bound is reached all the tags in the stack must be opened; when the upper
      * bound is reached all the tags in the stack must be closed.
      */
-    private Stack<XMLTag> openedTags = new Stack<XMLTag>();
+    private Deque<XMLTag> openedTags = new ConcurrentLinkedDeque<XMLTag>();
 
     /**
      * The fragment that is extracted during the parsing process.

@@ -76,7 +76,7 @@ public class FontFilter extends AbstractHTMLFilter
         for (Element fontTag : fontTags) {
             Element span = document.createElement(TAG_SPAN);
             moveChildren(fontTag, span);
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             if (fontTag.hasAttribute(ATTRIBUTE_FONTCOLOR)) {
                 buffer.append(String.format("color:%s;", fontTag.getAttribute(ATTRIBUTE_FONTCOLOR)));
             }

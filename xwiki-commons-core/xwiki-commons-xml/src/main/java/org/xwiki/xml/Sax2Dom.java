@@ -19,9 +19,10 @@
  */
 package org.xwiki.xml;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -78,7 +79,7 @@ public class Sax2Dom implements ContentHandler, LexicalHandler
     /**
      * The current nodes.
      */
-    private final Stack<Node> nodes = new Stack<Node>();
+    private final Deque<Node> nodes = new ArrayDeque<>();
 
     /**
      * The namespaces declarations.

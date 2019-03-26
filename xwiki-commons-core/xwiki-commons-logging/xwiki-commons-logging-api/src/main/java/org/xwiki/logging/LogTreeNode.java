@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.xwiki.logging.event.BeginLogEvent;
@@ -86,7 +87,7 @@ public class LogTreeNode extends BeginLogEvent implements Iterable<LogEvent>, Se
     /**
      * The children of this log event.
      */
-    protected ConcurrentLinkedQueue<LogEvent> children;
+    protected Queue<LogEvent> children;
 
     // Iterable
 

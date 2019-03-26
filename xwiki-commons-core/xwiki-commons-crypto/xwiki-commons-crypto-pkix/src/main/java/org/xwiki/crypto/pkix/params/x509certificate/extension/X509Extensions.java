@@ -20,8 +20,8 @@
 package org.xwiki.crypto.pkix.params.x509certificate.extension;
 
 import java.io.IOException;
-import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 import org.bouncycastle.asn1.x509.Extension;
 
@@ -109,7 +109,7 @@ public interface X509Extensions
     /**
      * @return the set of key usages authorized, or null of none has been assigned.
      */
-    EnumSet<KeyUsage> getKeyUsage();
+    Set<KeyUsage> getKeyUsage();
 
     /**
      * @return the set of extended key usages authorized, or null of none has been assigned.

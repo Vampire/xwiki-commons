@@ -20,7 +20,7 @@
 package org.xwiki.crypto.pkix;
 
 import java.io.IOException;
-import java.util.EnumSet;
+import java.util.Set;
 
 import org.xwiki.component.annotation.Role;
 import org.xwiki.crypto.params.cipher.asymmetric.PublicKeyParameters;
@@ -92,7 +92,7 @@ public interface X509ExtensionBuilder
      * @param usages a set of key usage.
      * @return this extensions builder to allow chaining.
      */
-    X509ExtensionBuilder addKeyUsage(EnumSet<KeyUsage> usages);
+    X509ExtensionBuilder addKeyUsage(Set<KeyUsage> usages);
 
     /**
      * Add a key usage extensions.
@@ -101,7 +101,7 @@ public interface X509ExtensionBuilder
      * @param usages a set of key usage.
      * @return this extensions builder to allow chaining.
      */
-    X509ExtensionBuilder addKeyUsage(boolean critical, EnumSet<KeyUsage> usages);
+    X509ExtensionBuilder addKeyUsage(boolean critical, Set<KeyUsage> usages);
 
     /**
      * Add a extended key usage extensions.

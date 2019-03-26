@@ -19,7 +19,8 @@
  */
 package org.xwiki.context.internal;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 import javax.inject.Singleton;
 
@@ -42,14 +43,14 @@ public class DefaultExecution implements Execution
     /**
      * Isolate the execution context by thread.
      */
-    private ThreadLocal<Stack<ExecutionContext>> context = new ThreadLocal<Stack<ExecutionContext>>();
+    private ThreadLocal<Deque<ExecutionContext>> context = new ThreadLocal<>();
 
     @Override
     public void pushContext(ExecutionContext context)
     {
-        Stack<ExecutionContext> stack = this.context.get();
+        Deque<ExecutionContext> stack = this.context.get();
         if (stack == null) {
-            stack = new Stack<ExecutionContext>();
+            stack = new ArrayDeque<>();
             this.context.set(stack);
         } else if (!stack.isEmpty()) {
             context.inheritFrom(stack.peek());
@@ -67,16 +68,16 @@ public class DefaultExecution implements Execution
     @Override
     public ExecutionContext getContext()
     {
-        Stack<ExecutionContext> stack = this.context.get();
+        Deque<ExecutionContext> stack = this.context.get();
         return stack == null || stack.isEmpty() ? null : stack.peek();
     }
 
     @Override
     public void setContext(ExecutionContext context)
     {
-        Stack<ExecutionContext> stack = this.context.get();
+        Deque<ExecutionContext> stack = this.context.get();
         if (stack == null) {
-            stack = new Stack<ExecutionContext>();
+            stack = new ArrayDeque<>();
             this.context.set(stack);
             stack.push(context);
         } else if (stack.isEmpty()) {
@@ -85,7 +86,8 @@ public class DefaultExecution implements Execution
             if (context != null) {
                 context.inheritFrom(stack.peek());
             }
-            stack.set(stack.size() - 1, context);
+            stack.pop();
+            stack.push(context);
         }
     }
 

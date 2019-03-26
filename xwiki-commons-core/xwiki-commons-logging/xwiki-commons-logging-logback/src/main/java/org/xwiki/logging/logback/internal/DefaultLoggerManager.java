@@ -20,8 +20,9 @@
 package org.xwiki.logging.logback.internal;
 
 import java.util.Collection;
+import java.util.Deque;
 import java.util.Iterator;
-import java.util.Stack;
+import java.util.LinkedList;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -65,7 +66,7 @@ public class DefaultLoggerManager implements LoggerManager, Initializable
     /**
      * The stack of listeners for the current thread.
      */
-    private ThreadLocal<Stack<EventListener>> listeners = new ThreadLocal<Stack<EventListener>>();
+    private ThreadLocal<Deque<EventListener>> listeners = new ThreadLocal<>();
 
     /**
      * Logback utilities.
@@ -102,10 +103,10 @@ public class DefaultLoggerManager implements LoggerManager, Initializable
     @Override
     public void pushLogListener(EventListener listener)
     {
-        Stack<EventListener> listenerStack = this.listeners.get();
+        Deque<EventListener> listenerStack = this.listeners.get();
 
         if (listenerStack == null) {
-            listenerStack = new Stack<EventListener>();
+            listenerStack = new LinkedList<>();
             this.listeners.set(listenerStack);
         }
 
@@ -125,7 +126,7 @@ public class DefaultLoggerManager implements LoggerManager, Initializable
     @Override
     public EventListener popLogListener()
     {
-        Stack<EventListener> listenerStack = this.listeners.get();
+        Deque<EventListener> listenerStack = this.listeners.get();
 
         EventListener listener;
         if (listenerStack != null && !listenerStack.isEmpty()) {

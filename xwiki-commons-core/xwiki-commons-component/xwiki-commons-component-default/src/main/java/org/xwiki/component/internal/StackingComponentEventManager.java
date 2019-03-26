@@ -19,7 +19,8 @@
  */
 package org.xwiki.component.internal;
 
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 import org.xwiki.component.descriptor.ComponentDescriptor;
 import org.xwiki.component.event.ComponentDescriptorAddedEvent;
@@ -47,7 +48,7 @@ public class StackingComponentEventManager implements ComponentEventManager
     /**
      * The event stacked before been given the order to send them.
      */
-    private Stack<ComponentEventEntry> events = new Stack<ComponentEventEntry>();
+    private Deque<ComponentEventEntry> events = new ArrayDeque<>();
 
     /**
      * Indicate if event should be retained to directly sent.

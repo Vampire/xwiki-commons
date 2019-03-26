@@ -22,12 +22,13 @@ package org.xwiki.extension.jar.internal.handler;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Stack;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -85,6 +86,8 @@ public class JarExtensionJobFinishingListener implements EventListener
         }
     }
 
+    private static final UninstalledExtensionCollection NONE = new UninstalledExtensionCollection();
+
     /** The list of events observed. */
     private static final List<Event> EVENTS = Arrays.asList(new ExtensionUninstalledEvent(),
         new ExtensionUpgradedEvent(), new JobStartedEvent(), new JobFinishingEvent());
@@ -137,9 +140,9 @@ public class JarExtensionJobFinishingListener implements EventListener
         ExecutionContext context = this.execution.getContext();
 
         if (context != null) {
-            Stack<UninstalledExtensionCollection> extensions = getUninstalledExtensionCollectionStack(true);
+            Deque<UninstalledExtensionCollection> extensions = getUninstalledExtensionCollectionStack(true);
 
-            extensions.push(null);
+            extensions.push(NONE);
         }
     }
 
@@ -148,7 +151,7 @@ public class JarExtensionJobFinishingListener implements EventListener
         ExecutionContext context = this.execution.getContext();
 
         if (context != null) {
-            Stack<UninstalledExtensionCollection> extensions = getUninstalledExtensionCollectionStack(false);
+            Deque<UninstalledExtensionCollection> extensions = getUninstalledExtensionCollectionStack(false);
 
             if (extensions != null) {
                 extensions.pop();
@@ -156,18 +159,18 @@ public class JarExtensionJobFinishingListener implements EventListener
         }
     }
 
-    private Stack<UninstalledExtensionCollection> getUninstalledExtensionCollectionStack(boolean create)
+    private Deque<UninstalledExtensionCollection> getUninstalledExtensionCollectionStack(boolean create)
     {
         ExecutionContext context = this.execution.getContext();
         final String contextKey = "extension.jar.uninstalledExtensions";
 
         if (context != null) {
             @SuppressWarnings("unchecked")
-            Stack<UninstalledExtensionCollection> extensions =
-                (Stack<UninstalledExtensionCollection>) context.getProperty(contextKey);
+            Deque<UninstalledExtensionCollection> extensions =
+                (Deque<UninstalledExtensionCollection>) context.getProperty(contextKey);
 
             if (extensions == null && create) {
-                extensions = new Stack<>();
+                extensions = new ConcurrentLinkedDeque<>();
                 context.setProperty(contextKey, extensions);
             }
 
@@ -182,14 +185,15 @@ public class JarExtensionJobFinishingListener implements EventListener
         ExecutionContext context = this.execution.getContext();
 
         if (context != null) {
-            Stack<UninstalledExtensionCollection> extensions = getUninstalledExtensionCollectionStack(false);
+            Deque<UninstalledExtensionCollection> extensions = getUninstalledExtensionCollectionStack(false);
 
             if (extensions != null) {
                 UninstalledExtensionCollection collection = extensions.peek();
 
-                if (collection == null && create) {
+                if (collection == NONE && create) {
                     collection = new UninstalledExtensionCollection();
-                    extensions.set(extensions.size() - 1, collection);
+                    extensions.pop();
+                    extensions.push(collection);
                 }
 
                 return collection;
